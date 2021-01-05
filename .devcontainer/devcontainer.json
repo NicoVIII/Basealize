@@ -20,7 +20,8 @@
         "editorconfig.editorconfig",
 		"Ionide.Ionide-fsharp",
         "ms-dotnettools.csharp",
-        "ionide.ionide-paket"
+        "ionide.ionide-paket",
+        "me-dutour-mathieu.vscode-github-actions"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
