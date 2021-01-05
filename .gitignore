@@ -1,0 +1,13 @@
+# Visual Studio Code specific files and folder
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Generated stuff from Ionide Plugin for VSCode
+.ionide
+
+# Build results
+bin/
+obj/
