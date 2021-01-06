@@ -6,15 +6,24 @@ open Dozenalize.Types
 module Display =
     let digit config digit =
         match digit with
-        | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 -> string digit
+        | 0
+        | 1
+        | 2
+        | 3
+        | 4
+        | 5
+        | 6
+        | 7
+        | 8
+        | 9 -> string digit
         | 10 -> config.decChar
         | 11 -> config.elChar
         | _ -> failwithf "%i is not a valid dozenal digit." digit
 
-    let inline number config (number:^a) =
-        let zero:^a = LanguagePrimitives.GenericZero
-        let one:^a = LanguagePrimitives.GenericOne
-        let twelve:^a = (Seq.init 12 (fun _ -> one)) |> Seq.sum
+    let inline number config (number: ^a) =
+        let zero: ^a = LanguagePrimitives.GenericZero
+        let one: ^a = LanguagePrimitives.GenericOne
+        let twelve: ^a = (Seq.init 12 (fun _ -> one)) |> Seq.sum
 
         // Helper to convert the front part of the number
         let rec helperFront config number parts =
@@ -40,7 +49,7 @@ module Display =
                 helperFront config rest' parts
 
         // Helper to convert the back part of the number
-        let rec helperBack config (number:^a) parts =
+        let rec helperBack config (number: ^a) counter parts =
             let rest = (abs number) * twelve
 
             // Add digit of rest to result
@@ -53,11 +62,11 @@ module Display =
             // Calculate what is left for the next run
             let rest' = rest % one
 
-            // If we have nothing left,
-            if rest' = zero then
+            // If we have nothing left or reached precision, we quit
+            if rest' = zero || counter >= config.precision then
                 parts
             else
-                helperBack config rest' parts
+                helperBack config rest' (counter + 1uy) parts
 
         // We determine the numbers at the front first
         let front =
@@ -70,11 +79,16 @@ module Display =
 
         // Do we have decimal places we need to consider?
         let decimals = abs number % one
-        if decimals > zero then
-            Seq.append front (Seq.singleton ".")
-            |> helperBack config decimals
-        else
-            front
+
+        (if decimals > zero then
+             Seq.append front (Seq.singleton ".")
+             |> helperBack config decimals 1uy
+         else
+             front)
         |> String.concat ""
         // Do we need to add a minus?
-        |> (fun numberString -> if number < zero then "-" + numberString else numberString)
+        |> (fun numberString ->
+            if number < zero then
+                "-" + numberString
+            else
+                numberString)

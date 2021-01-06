@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Include="Types.fs" />
     <Compile Include="Display.fs" />
+    <Compile Include="Parse.fs" />
   </ItemGroup>
 
 </Project>
