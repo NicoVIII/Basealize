@@ -20,7 +20,7 @@ module Display =
         | 11 -> config.elChar
         | _ -> failwithf "%i is not a valid dozenal digit." digit
 
-    let inline number config (number: ^a) =
+    let inline number config precision (number: ^a) =
         let zero: ^a = LanguagePrimitives.GenericZero
         let one: ^a = LanguagePrimitives.GenericOne
         let twelve: ^a = (Seq.init 12 (fun _ -> one)) |> Seq.sum
@@ -52,18 +52,29 @@ module Display =
         let rec helperBack config (number: ^a) counter parts =
             let rest = (abs number) * twelve
 
+            let digit =
+                // Round, if we are at end of precision
+                if counter >= precision then
+                    // Look at the next digit
+                    let nextDigit = (int) (rest % one * twelve)
+
+                    (if nextDigit >= 6 then
+                         int rest + 1
+                     else
+                         int rest)
+                    |> digit config
+                else
+                    int rest |> digit config
+
             // Add digit of rest to result
             let parts =
-                int rest
-                |> digit config
-                |> Seq.singleton
-                |> Seq.append parts
+                digit |> Seq.singleton |> Seq.append parts
 
             // Calculate what is left for the next run
             let rest' = rest % one
 
             // If we have nothing left or reached precision, we quit
-            if rest' = zero || counter >= config.precision then
+            if rest' = zero || counter >= precision then
                 parts
             else
                 helperBack config rest' (counter + 1uy) parts
@@ -80,7 +91,7 @@ module Display =
         // Do we have decimal places we need to consider?
         let decimals = abs number % one
 
-        (if decimals > zero then
+        (if decimals > zero && precision > 0uy then
              Seq.append front (Seq.singleton ".")
              |> helperBack config decimals 1uy
          else

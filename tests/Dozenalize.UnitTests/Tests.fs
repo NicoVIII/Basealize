@@ -6,7 +6,11 @@ open Dozenalize
 open Dozenalize.Types
 
 let config = Config.PreConf.ab
-let inline display x = Display.number config x
+let inline display x = Display.number config 10uy x
+
+let inline displayPrecision precision x =
+    Display.number config (byte precision) x
+
 let parse = Parse.number config
 
 let tests =
@@ -52,9 +56,23 @@ let tests =
                   let result = display -0.25
                   Expect.equal result "-0.3" "The strings should equal"
               }
-              test "double: -154.2" {
-                  let result = display -154.2
-                  Expect.equal result "-10A.2497249724" "The strings should equal"
+              test "double: -154.75" {
+                  let result = display -154.75
+                  Expect.equal result "-10A.9" "The strings should equal"
+              }
+              // Test some precisions
+              test "double: 0.2 (precision 0)" {
+                  let result = displayPrecision 0 0.2
+                  Expect.equal result "0" "The strings should equal"
+              }
+              test "double: 0.2 (precision 1)" {
+                  let result = displayPrecision 1 0.2
+                  Expect.equal result "0.2" "The strings should equal"
+              }
+              test "double: 0.2 (precision 10)" {
+                  let result = displayPrecision 10 0.2
+                  // Should round up
+                  Expect.equal result "0.2497249725" "The strings should equal"
               }
               // Some different datatypes
               test "decimal: 23" {
@@ -69,6 +87,11 @@ let tests =
                   let result = display 23I
                   Expect.equal result "1B" "The strings should equal"
               }
+              // Uints do not work, because of the use of abs
+              (*test "uint: 23" {
+                  let result = display 23u
+                  Expect.equal result "1B" "The strings should equal"
+              }*)
               test "int: 23" {
                   let result = display 23
                   Expect.equal result "1B" "The strings should equal"
