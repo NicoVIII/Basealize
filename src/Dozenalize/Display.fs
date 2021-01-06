@@ -4,6 +4,10 @@ open Dozenalize.Types
 
 [<RequireQualifiedAccess>]
 module Display =
+    type Part =
+        | Separator
+        | Digit of int
+
     let digit config digit =
         match digit with
         | 0
@@ -32,7 +36,7 @@ module Display =
             // Add digit of rest to result
             let parts =
                 int rest
-                |> digit config
+                |> Digit
                 |> Seq.singleton
                 |> Seq.append parts
 
@@ -52,37 +56,44 @@ module Display =
         let rec helperBack config (number: ^a) counter parts =
             let rest = (abs number) * twelve
 
-            let digit =
-                // Round, if we are at end of precision
-                if counter >= precision then
-                    // Look at the next digit
-                    let nextDigit = (int) (rest % one * twelve)
-
-                    (if nextDigit >= 6 then
-                         int rest + 1
-                     else
-                         int rest)
-                    |> digit config
-                else
-                    int rest |> digit config
-
             // Add digit of rest to result
             let parts =
-                digit |> Seq.singleton |> Seq.append parts
+                int rest
+                |> Digit
+                |> Seq.singleton
+                |> Seq.append parts
 
             // Calculate what is left for the next run
             let rest' = rest % one
 
-            // If we have nothing left or reached precision, we quit
-            if rest' = zero || counter >= precision then
+            // If we have nothing left
+            if rest' = zero then
                 parts
+            // If we reached precision, we round and quit
+            elif counter >= precision then
+                if (int) (rest' * twelve) >= 6 then
+                    // Round up
+                    Seq.mapFoldBack
+                        (fun part oneUp ->
+                            match part with
+                            | Separator -> part, oneUp
+                            | Digit d ->
+                                let d = if oneUp then d + 1 else d
+                                let oneUp = d >= 12
+                                d % 12 |> Digit, oneUp)
+                        parts
+                        true
+                    |> fst
+                else
+                    // Round down, nothing to do
+                    parts
             else
                 helperBack config rest' (counter + 1uy) parts
 
         // We determine the numbers at the front first
         let front =
             if abs number < one then
-                "0" |> Seq.singleton
+                Digit 0 |> Seq.singleton
             else
                 helperFront config (int number) Seq.empty
                 // We have to rev this, the helper works from back to front
@@ -92,10 +103,14 @@ module Display =
         let decimals = abs number % one
 
         (if decimals > zero && precision > 0uy then
-             Seq.append front (Seq.singleton ".")
+             Seq.append front (Seq.singleton Separator)
              |> helperBack config decimals 1uy
          else
              front)
+        |> Seq.map
+            (function
+            | Separator -> "."
+            | Digit d -> digit config d)
         |> String.concat ""
         // Do we need to add a minus?
         |> (fun numberString ->

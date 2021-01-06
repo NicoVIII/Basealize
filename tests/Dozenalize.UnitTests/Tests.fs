@@ -79,6 +79,11 @@ let tests =
                   // Should round up
                   Expect.equal result "1.0" "The strings should equal"
               }
+              test "double: 0.999999 (precision 5)" {
+                  let result = displayPrecision 5 0.999999
+                  // Should round up
+                  Expect.equal result "1.00000" "The strings should equal"
+              }
               // Some different datatypes
               test "decimal: 23" {
                   let result = display 23m
