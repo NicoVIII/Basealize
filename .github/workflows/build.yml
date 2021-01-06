@@ -24,4 +24,4 @@ jobs:
       - name: Build
         run: dotnet tool restore && dotnet paket restore && dotnet build
       - name: Run tests
-        run: dotnet run --project tests/Dozenalize.UnitTests/Dozenalize.UnitTests.fsproj
+        run: ./run_tests.sh
