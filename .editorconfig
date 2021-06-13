@@ -15,7 +15,7 @@ fsharp_single_argument_web_mode = true
 [*.{c,f}sproj]
 indent_size = 2
 
-[*.{fsx,sh,yml,xaml}]
+[*.{sh,yml,xaml}]
 indent_size = 2
 
 [*.md]
