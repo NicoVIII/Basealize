@@ -19,4 +19,8 @@
     <Compile Include="Parse.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Basealize\Basealize.fsproj" />
+  </ItemGroup>
+
 </Project>

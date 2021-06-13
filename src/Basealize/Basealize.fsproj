@@ -2,18 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Product>NicoVIII.Dozenalize</Product>
-    <PackageId>NicoVIII.Dozenalize</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="Types.fs" />
     <Compile Include="Display.fs" />
     <Compile Include="Parse.fs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Basealize\Basealize.fsproj" />
   </ItemGroup>
 
 </Project>
