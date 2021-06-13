@@ -5,11 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run Expecto (debug)",
+            "name": "Dozenalize Expecto (debug)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/tests/Dozenalize.UnitTests/bin/Debug/net5.0/Dozenalize.UnitTests.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Seximalize Expecto (debug)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/tests/Seximalize.UnitTests/bin/Debug/net5.0/Seximalize.UnitTests.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,

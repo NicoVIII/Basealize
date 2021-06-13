@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Product>NicoVIII.Seximalize</Product>
+    <PackageId>NicoVIII.Seximalize</PackageId>
+    <Authors>NicoVIII</Authors>
+    <Title>Seximalize</Title>
+    <Description>A package to help converting numbers to seximal and the other way around.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/NicoVIII/Seximalize</PackageProjectUrl>
+    <Tags>Seximal</Tags>
+    <RepositoryUrl>https://github.com/NicoVIII/Seximalize</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Display.fs" />
+    <Compile Include="Parse.fs" />
+  </ItemGroup>
+
+</Project>
