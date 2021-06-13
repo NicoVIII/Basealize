@@ -3,9 +3,8 @@ module Tests
 open Expecto
 
 open Dozenalize
-open Dozenalize.Types
 
-let config = Config.PreConf.ab
+let config = Config.ab
 let inline display x = Display.number config 10uy x
 
 let inline displayPrecision precision x =
