@@ -1,5 +1,7 @@
 # Basealize
 
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/NicoVIII/Basealize)
+
 Basealize is a small base library which allows creating and parsing strings for different bases.
 Per default we use the decimal base ten but there are other interesting bases as well which should be
 easily usable.
