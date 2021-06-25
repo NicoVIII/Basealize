@@ -2,7 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Product>NicoVIII.Basealize</Product>
+    <PackageId>NicoVIII.Basealize</PackageId>
+    <Title>Basealize</Title>
+    <Description>A package to help creating libraries for converting numbers to different bases and the otherway around.</Description>
+    <Tags>Numberbases</Tags>
   </PropertyGroup>
+
+  <Import Project="../Metadata.targets"/>
 
   <ItemGroup>
     <Compile Include="Types.fs" />

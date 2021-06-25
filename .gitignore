@@ -11,3 +11,4 @@
 # Build results
 bin/
 obj/
+deploy/
