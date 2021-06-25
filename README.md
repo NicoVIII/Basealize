@@ -1,14 +1,14 @@
 # Basealize
 
 Basealize is a small base library which allows creating and parsing strings for different bases.
-Per default we use the decimal base 10 but there are other interesting bases as well which should be
+Per default we use the decimal base ten but there are other interesting bases as well which should be
 easily usable.
 
 For now these libraries target F#, but I plan to add a C# layer for easy interop!
 
 ## Dozenalize
 
-The base 12 is an interesting one because it needs only 2 characters more and the base 12 is highly
+Base twelve is an interesting one because it needs only 2 characters more and the base twelve is highly
 composable.
 
 https://en.wikipedia.org/wiki/Duodecimal
@@ -45,7 +45,7 @@ Display.number config 5uy 13.16 // 11.1B059
 
 ## Seximalize
 
-The base 6 is also interesting like jan Misali points out here:
+Base six is also interesting like jan Misali points out here:
 https://www.seximal.net/
 
 ### Usage
