@@ -1,18 +1,15 @@
 #!/bin/dotnet fsi
 
 #r "nuget: Fake.DotNet.Cli"
-#r "nuget: FsToolkit.ErrorHandling"
 
 open System.IO
 
 open Fake.DotNet
 
-open FsToolkit.ErrorHandling
-
 module Config =
     let testFolder = "tests"
 
-// FsToolkit does not provide the kleisli composition
+// kleisli composition operator for chaining
 let (>=>) fun1 fun2 = fun1 >> (Result.bind fun2)
 
 module Result =
@@ -28,8 +25,8 @@ let dotnet command args () =
     DotNet.exec id command args
     |> (fun result -> result.OK)
     |> function
-    | true -> Ok()
-    | false -> Error()
+        | true -> Ok()
+        | false -> Error()
 
 module Commands =
     let restore =
@@ -56,18 +53,18 @@ let execute =
     |> Option.defaultValue ""
     // We determine which commands to run
     |> function
-    | "restore" -> Commands.restore
-    | "build" -> Commands.build
-    | "test" -> Commands.build >=> Commands.test
-    | _ ->
-        (fun _ ->
-            printfn "Usage: (./run.fsx | dotnet fsi run.fsx) <command>"
-            printfn "Look up available commands in run.fsx"
-            Error())
+        | "restore" -> Commands.restore
+        | "build" -> Commands.build
+        | "test" -> Commands.build >=> Commands.test
+        | _ ->
+            (fun _ ->
+                printfn "Usage: (./run.fsx | dotnet fsi run.fsx) <command>"
+                printfn "Look up available commands in run.fsx"
+                Error())
 
 // We execute it and map the result to an exit code
 execute ()
 |> function
-| Ok () -> 0
-| Error () -> 1
+    | Ok () -> 0
+    | Error () -> 1
 |> exit
