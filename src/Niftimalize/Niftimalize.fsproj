@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Product>NicoVIII.Niftimalize</Product>
+    <PackageId>NicoVIII.Niftimalize</PackageId>
+    <Title>Niftimalize</Title>
+    <Description>A package to help converting numbers to niftimal and the other way around.</Description>
+    <Tags>Numberbases;Niftimal</Tags>
+  </PropertyGroup>
+
+  <Import Project="../Metadata.targets"/>
+
+  <ItemGroup>
+    <Compile Include="Display.fs" />
+    <Compile Include="Parse.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Basealize\Basealize.fsproj" />
+  </ItemGroup>
+
+</Project>

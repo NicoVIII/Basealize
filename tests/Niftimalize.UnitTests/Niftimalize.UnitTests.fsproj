@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Seximalize\Seximalize.fsproj">
-      <Name>Seximalize.fsproj</Name>
+    <ProjectReference Include="..\..\src\Niftimalize\Niftimalize.fsproj">
+      <Name>Niftimalize.fsproj</Name>
     </ProjectReference>
   </ItemGroup>
 
