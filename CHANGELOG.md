@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2021-07-01
+### Added
+- Niftimalize as implementation for base thirtysix
+- Parse.tryDigit functions to all implementations
+
+### Changed
+- Rearrange internal code, moved a bit more into Basealize
+
 ## [0.1.0] - 2021-06-25
 ### Added
 - Initial implementation of a base conversion library
