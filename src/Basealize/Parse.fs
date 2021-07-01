@@ -1,7 +1,23 @@
 namespace Basealize
 
+open System.Text.RegularExpressions
+
 [<RequireQualifiedAccess>]
 module Parse =
+    let validNumber digitRegex numberString =
+        Regex.Match(
+            numberString,
+            @"^-?"
+            + digitRegex
+            + @"+([.,]"
+            + digitRegex
+            + @"*)?$"
+        )
+        |> (fun m -> m.Success)
+        |> function
+            | true -> Some numberString
+            | false -> None
+
     let parseNumber digit numBase (number: string) =
         let (negative, number) =
             if number.StartsWith "-" then
