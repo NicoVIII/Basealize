@@ -1,5 +1,5 @@
 
-## Seximalize
+## Niftimalize
 
 Base thirtysix is an interesting one to compress seximal like jan Misali points out here:
 https://www.seximal.net/hexaseximal
