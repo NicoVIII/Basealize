@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Dozenalize\Dozenalize.fsproj" />
+    <ProjectReference Include="..\..\src\Niftimalize\Niftimalize.fsproj" />
+    <ProjectReference Include="..\..\src\Seximalize\Seximalize.fsproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>dozenalize_csharp</RootNamespace>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
+  </PropertyGroup>
+
+</Project>

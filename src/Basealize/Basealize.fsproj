@@ -15,6 +15,7 @@
     <Compile Include="Types.fs" />
     <Compile Include="Display.fs" />
     <Compile Include="Parse.fs" />
+    <Compile Include="Api.fs" />
   </ItemGroup>
 
 </Project>

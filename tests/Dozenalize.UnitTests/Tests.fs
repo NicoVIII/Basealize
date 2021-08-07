@@ -4,7 +4,8 @@ open Expecto
 
 open Dozenalize
 
-let config = Config.ab
+let config = Config.createAb ()
+
 let inline display x = Display.number config 10uy x
 
 let inline displayPrecision precision x =

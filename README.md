@@ -9,7 +9,7 @@
 [![nuget (Seximalize)](https://img.shields.io/nuget/v/NicoVIII.Seximalize?label=nuget%20%28Seximalize%29)](https://www.nuget.org/packages/NicoVIII.Seximalize/)
 [![nuget (Niftimalize)](https://img.shields.io/nuget/v/NicoVIII.Niftimalize?label=nuget%20%28Niftimalize%29)](https://www.nuget.org/packages/NicoVIII.Niftimalize/)
 
-Basealize is a small base library which allows creating and parsing strings for different bases.
+Basealize is a small base library which allows creating and parsing strings for different bases in F# and C#.
 Per default we use the decimal base ten but there are other interesting bases as well which should be
 easily usable.
 
@@ -18,8 +18,6 @@ In this repo there are also some implementations for different bases present:
  - Dozenalize (base twelve)
  - Seximalize (base six)
  - Niftimalize (base thirtysix)
-
-For now these libraries target F# only, but I plan to add a C# layer for easy interop!
 
 Dependening on what you plan to do you can find more information here:
 
