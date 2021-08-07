@@ -2,9 +2,6 @@
 
 This document should guide you if you want to contribute to this project.
 
-### TBD
- - Provide testdata for collection and locations
-
 ## Commands
 
 ### Restore
