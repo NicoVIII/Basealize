@@ -1,8 +1,3 @@
-#!/bin/dotnet fsi
-
-#r "nuget: Fake.DotNet.Cli"
-#r "nuget: Fake.IO.FileSystem"
-
 open System.IO
 
 open Fake.DotNet
@@ -11,6 +6,7 @@ open Fake.IO
 module Config =
     let srcFolder = "src"
     let testFolder = "tests"
+    let examplesFolder = "examples"
     let packFolder = "deploy"
 
 // kleisli composition operator for chaining
@@ -35,24 +31,34 @@ let dotnet command args () =
         | false -> Error()
 
 let isFsproj (file: string) = file.EndsWith ".fsproj"
+let isCsproj (file: string) = file.EndsWith ".csproj"
+let isProj (file: string) = isFsproj file || isCsproj file
+
+let handleProjects folder handler () =
+    folder
+    |> Seq.map Directory.EnumerateDirectories
+    |> Seq.concat
+    |> Seq.map Directory.EnumerateFiles
+    |> Seq.concat
+    |> Seq.filter isProj
+    |> Seq.map (fun proj -> handler proj ())
+    |> Seq.reduce Result.collapse
+
+let handleAllProjects = handleProjects [ Config.srcFolder; Config.testFolder; Config.examplesFolder ]
+let handleTestProjects = handleProjects [ Config.testFolder ]
 
 module Commands =
     let restore =
-        dotnet "tool" "restore" >=> dotnet "restore" ""
+        handleAllProjects (dotnet "restore")
 
-    let build = dotnet "build" ""
+    let build = handleAllProjects (dotnet "build")
 
-    let test () =
-        Directory.EnumerateDirectories Config.testFolder
-        |> Seq.map Directory.EnumerateFiles
-        |> Seq.concat
-        |> Seq.filter isFsproj
-        |> Seq.map
-            (fun project ->
-                printfn "\nRun tests in %s:" project
+    let test =
+        fun proj _ ->
+            printfn "\nRun tests in %s:" proj
 
-                dotnet "run" $"--project \"{project}\"" ())
-        |> Seq.reduce Result.collapse
+            dotnet "run" $"--project \"{proj}\"" ()
+        |> handleTestProjects
 
     /// Packs everything for nuget with given version
     let pack version () =
@@ -70,15 +76,16 @@ module Commands =
         |> Seq.reduce Result.collapse
 
 // We determine, what we want to execute
-let execute args =
+[<EntryPoint>]
+let execute args: int =
     // We read the command from arguments
     let command =
-        Array.tryItem 1 args |> Option.defaultValue ""
+        Array.tryItem 0 args |> Option.defaultValue ""
 
     // Read arguments for commands
     let commandArgs =
-        if Array.length args > 2 then
-            Array.skip 2 args |> Array.toList
+        if Array.length args > 1 then
+            Array.skip 1 args |> Array.toList
         else
             []
 
@@ -96,13 +103,10 @@ let execute args =
                 Error())
         | _ ->
             (fun _ ->
-                printfn "Usage: (./run.fsx | dotnet fsi run.fsx) <command>"
-                printfn "Look up available commands in run.fsx"
+                printfn "Usage: dotnet run <command>"
+                printfn "Look up available commands in run.fs"
                 Error())
-
-// We execute it and map the result to an exit code
-execute fsi.CommandLineArgs ()
-|> function
-    | Ok () -> 0
-    | Error () -> 1
-|> exit
+    |> (fun fnc -> fnc ())
+    |> function
+        | Ok () -> 0
+        | Error () -> 1

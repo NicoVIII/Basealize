@@ -6,3 +6,7 @@ framework: auto-detect
 nuget Expecto
 nuget FsCheck
 nuget Expecto.FsCheck
+
+# Run
+nuget Fake.Dotnet.Cli
+nuget Fake.IO.FileSystem

@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Product>NicoVIII.Niftimalize</Product>
@@ -8,16 +8,13 @@
     <Description>A package to help converting numbers to niftimal and the other way around.</Description>
     <Tags>Numberbases;Niftimal</Tags>
   </PropertyGroup>
-
-  <Import Project="../Metadata.targets"/>
-
+  <Import Project="../Metadata.targets" />
   <ItemGroup>
     <Compile Include="Convert.fs" />
     <Compile Include="Api.fs" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Basealize\Basealize.fsproj" />
   </ItemGroup>
-
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

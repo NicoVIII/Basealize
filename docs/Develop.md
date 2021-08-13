@@ -6,20 +6,20 @@ This document should guide you if you want to contribute to this project.
 
 ### Restore
 ```bash
-./run.fsx restore
+dotnet run restore
 ```
 
 ### Build
 ```bash
-./run.fsx build
+dotnet run build
 ```
 
 ### Run all tests
 ```bash
-./run.fsx test
+dotnet run test
 ```
 
 ### Pack libraries
 ```bash
-./run.fsx pack <version>
+dotnet run pack <version>
 ```

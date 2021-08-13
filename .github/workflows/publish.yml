@@ -25,12 +25,12 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ matrix.dotnet }}
-      - name: Restore tools
-        run: ./run.fsx restore
+      - name: Restore
+        run: dotnet tool restore && dotnet run restore
       - name: Run tests
-        run: ./run.fsx test
+        run: dotnet run test
       - name: Pack
-        run: ./run.fsx pack ${{ steps.tag_name.outputs.current_version }}
+        run: dotnet run pack ${{ steps.tag_name.outputs.current_version }}
       - name: Get Changelog Entry
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v2.0.0

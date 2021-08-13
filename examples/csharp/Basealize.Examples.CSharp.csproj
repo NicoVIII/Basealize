@@ -1,11 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\Dozenalize\Dozenalize.fsproj" />
     <ProjectReference Include="..\..\src\Niftimalize\Niftimalize.fsproj" />
     <ProjectReference Include="..\..\src\Seximalize\Seximalize.fsproj" />
   </ItemGroup>
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
@@ -13,5 +12,5 @@
     <Nullable>enable</Nullable>
     <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
   </PropertyGroup>
-
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
