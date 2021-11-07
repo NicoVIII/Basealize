@@ -25,14 +25,27 @@ open Dozenalize
 let config = Config.createAb ()
 ```
 
-Now you can use this config together with your wanted precision and number to create a string in dozenal:
+### Printer
+
+You can use this config together with your wanted precision and number to create a string in dozenal:
 
 ```fsharp
 open Dozenalize
 
-Display.number config 0uy 13.16 // 11
-Display.number config 2uy 13.16 // 11.1B
-Display.number config 5uy 13.16 // 11.1B059
+Display.number config 0uy 13.16 // "11"
+Display.number config 2uy 13.16 // "11.1B"
+Display.number config 5uy 13.16 // "11.1B059"
+```
+
+### Parser
+
+You can use the config and a string representing a dozenal number to create a float from it:
+
+```fsharp
+open Dozenalize
+
+Parse.number config "AB" // 131
+Parse.number config "11.1B" // 13.159722
 ```
 
 ## Usage (C#)
@@ -84,9 +97,9 @@ You can set a default precision on the printer itself:
 using Dozenalize.CSharp;
 
 var printer = DozenalPrinter.Create(Config.CreateAb(), 1);
-Console.WriteLine(printer.PrintNumber(1.3)); // 1.4
-Console.WriteLine(printer.PrintNumber(1.7)); // 1.8
-Console.WriteLine(printer.PrintNumber(3.3)); // 3.4
+Console.WriteLine(printer.PrintNumber(1.3)); // "1.4"
+Console.WriteLine(printer.PrintNumber(1.7)); // "1.8"
+Console.WriteLine(printer.PrintNumber(3.3)); // "3.4"
 ```
 
 But you can also define the precision per function call:
@@ -95,9 +108,9 @@ But you can also define the precision per function call:
 using Dozenalize.CSharp;
 
 var printer = DozenalPrinter.Create(config);
-Console.WriteLine(printer.PrintNumber(1.3, 1)); // 1.4
-Console.WriteLine(printer.PrintNumber(1.7, 2)); // 1.85
-Console.WriteLine(printer.PrintNumber(3.3, 3)); // 3.372
+Console.WriteLine(printer.PrintNumber(1.3, 1)); // "1.4"
+Console.WriteLine(printer.PrintNumber(1.7, 2)); // "1.85"
+Console.WriteLine(printer.PrintNumber(3.3, 3)); // "3.372"
 ```
 
 If you mix both methods, the argument on the function call beat the default precision on the printer:
@@ -106,9 +119,9 @@ If you mix both methods, the argument on the function call beat the default prec
 using Dozenalize.CSharp;
 
 var printer = DozenalPrinter.Create(Config.CreateAb(), 1);
-Console.WriteLine(printer.PrintNumber(1.3)); // 1.4
-Console.WriteLine(printer.PrintNumber(1.7, 2)); // 1.85
-Console.WriteLine(printer.PrintNumber(3.3, 3)); // 3.372
+Console.WriteLine(printer.PrintNumber(1.3)); // "1.4"
+Console.WriteLine(printer.PrintNumber(1.7, 2)); // "1.85"
+Console.WriteLine(printer.PrintNumber(3.3, 3)); // "3.372"
 ```
 
 ### Parser

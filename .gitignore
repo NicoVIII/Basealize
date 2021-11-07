@@ -7,6 +7,7 @@
 
 # Generated stuff from Ionide Plugin for VSCode
 .ionide
+.fake
 
 # Build results
 bin/
