@@ -1,112 +1,88 @@
+open Fake.IO
+open RunHelpers
+open RunHelpers.Templates
 open System.IO
 
-open Fake.DotNet
-open Fake.IO
-
+[<RequireQualifiedAccess>]
 module Config =
-    let srcFolder = "src"
-    let testFolder = "tests"
-    let examplesFolder = "examples"
-    let packFolder = "deploy"
+    let srcPath = "./src"
+    let testPath = "./tests"
+    let examplesPath = "./examples"
+    let packPath = "./deploy"
 
-// kleisli composition operator for chaining
-let (>=>) fun1 fun2 = fun1 >> (Result.bind fun2)
+let inline isFsproj (file: string) = file.EndsWith ".fsproj"
+let inline isCsproj (file: string) = file.EndsWith ".csproj"
+let inline isProj (file: string) = isFsproj file || isCsproj file
 
-module Result =
-    /// Collapses two of this simple results into one
-    let collapse res1 res2 =
-        match res1, res2 with
-        | Ok (), Ok () -> Ok()
-        | Error (), _
-        | _, Error () -> Error()
-
-// I want to use the Result type for results of exec
-let dotnet command args () =
-    printfn $"> dotnet {command} {args}"
-
-    DotNet.exec id command args
-    |> (fun result -> result.OK)
-    |> function
-        | true -> Ok()
-        | false -> Error()
-
-let isFsproj (file: string) = file.EndsWith ".fsproj"
-let isCsproj (file: string) = file.EndsWith ".csproj"
-let isProj (file: string) = isFsproj file || isCsproj file
-
-let handleProjects folder handler () =
+let inline getProjectsFromFolder folder =
     folder
-    |> Seq.map Directory.EnumerateDirectories
-    |> Seq.concat
-    |> Seq.map Directory.EnumerateFiles
-    |> Seq.concat
+    |> Seq.collect (fun folder -> Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories))
     |> Seq.filter isProj
-    |> Seq.map (fun proj -> handler proj ())
-    |> Seq.reduce Result.collapse
 
-let handleAllProjects = handleProjects [ Config.srcFolder; Config.testFolder; Config.examplesFolder ]
-let handleTestProjects = handleProjects [ Config.testFolder ]
+let inline getAllProjects () = getProjectsFromFolder [ Config.srcPath; Config.testPath; Config.examplesPath ]
+let inline getTestProjects () = getProjectsFromFolder [ Config.testPath ]
+let inline getSrcProjects () = getProjectsFromFolder [ Config.srcPath ]
 
-module Commands =
-    let restore =
-        handleAllProjects (dotnet "restore")
+[<RequireQualifiedAccess>]
+module Task =
+    let restore () =
+        job {
+            DotNet.toolRestore ()
+            for project in getAllProjects () do
+                DotNet.restore project
+        }
 
-    let build = handleAllProjects (dotnet "build")
+    let build config =
+        job {
+            for project in getAllProjects () do
+                DotNet.build project config
+        }
 
-    let test =
-        fun proj _ ->
-            printfn "\nRun tests in %s:" proj
+    let test () =
+         parallelJob {
+             for project in getTestProjects () do
+                DotNet.run project
+         }
 
-            dotnet "run" $"--project \"{proj}\"" ()
-        |> handleTestProjects
+    let pack version =
+        job {
+            Shell.cleanDir Config.packPath
 
-    /// Packs everything for nuget with given version
-    let pack version () =
-        let outDir = Config.packFolder
-
-        // Clean up output folder
-        Directory.delete outDir
-
-        // We pack every project in the src folder
-        Directory.EnumerateDirectories Config.srcFolder
-        |> Seq.map Directory.EnumerateFiles
-        |> Seq.concat
-        |> Seq.filter isFsproj
-        |> Seq.map (fun project -> dotnet "pack" $"-c Release -o \"{outDir}\" /p:Version=%s{version} \"{project}\"" ())
-        |> Seq.reduce Result.collapse
+            parallelJob {
+                for project in getSrcProjects () do
+                    DotNet.pack Config.packPath project version
+            }
+        }
 
 // We determine, what we want to execute
 [<EntryPoint>]
-let execute args: int =
-    // We read the command from arguments
-    let command =
-        Array.tryItem 0 args |> Option.defaultValue ""
-
-    // Read arguments for commands
-    let commandArgs =
-        if Array.length args > 1 then
-            Array.skip 1 args |> Array.toList
-        else
-            []
-
-    (command, commandArgs)
-    // We determine which commands to run
+let main args: int =
+    List.ofArray args
     |> function
-        | "restore", [] -> Commands.restore
-        | "build", [] -> Commands.build
-        | "test", [] -> Commands.build >=> Commands.test
-        | "pack", [ version ] -> Commands.build >=> Commands.pack version
+        | [ "restore" ] -> Task.restore ()
+        | [ "build" ] ->
+            job {
+                Task.restore ()
+                Task.build Debug
+            }
+        | [ "test" ] ->
+            job {
+                Task.restore ()
+                Task.test ()
+            }
+        | [ "pack"; version ] ->
+            job {
+                Task.restore ()
+                Task.build Debug
+                Task.pack version
+            }
         // Catch errors and help
-        | "pack", [] ->
-            (fun _ ->
-                printfn "pack command needs one argument, which is the version to pack for."
-                Error())
+        | [ "pack" ] ->
+            Job.error [ "Usage: dotnet run pack <version>" ]
         | _ ->
-            (fun _ ->
-                printfn "Usage: dotnet run <command>"
-                printfn "Look up available commands in run.fs"
-                Error())
-    |> (fun fnc -> fnc ())
-    |> function
-        | Ok () -> 0
-        | Error () -> 1
+            Job.error
+                [
+                        "Usage: dotnet run <command>"
+                        "Look up available commands in run.fs"
+                    ]
+    |> Job.execute

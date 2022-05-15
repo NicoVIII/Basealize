@@ -8,7 +8,6 @@
     <Description>A package to help converting numbers to seximal and the other way around.</Description>
     <Tags>Numberbases;Seximal</Tags>
   </PropertyGroup>
-  <Import Project="../Metadata.targets" />
   <ItemGroup>
     <Compile Include="Convert.fs" />
     <Compile Include="Api.fs" />
@@ -16,5 +15,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Basealize\Basealize.fsproj" />
   </ItemGroup>
-  <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

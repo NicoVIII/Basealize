@@ -8,7 +8,6 @@
     <Description>A package to help converting numbers to dozenal and the other way around.</Description>
     <Tags>Numberbases;Dozenal</Tags>
   </PropertyGroup>
-  <Import Project="../Metadata.targets" />
   <ItemGroup>
     <Compile Include="Types.fs" />
     <Compile Include="Convert.fs" />
@@ -17,5 +16,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Basealize\Basealize.fsproj" />
   </ItemGroup>
-  <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

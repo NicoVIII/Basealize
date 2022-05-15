@@ -11,6 +11,7 @@ trim_trailing_whitespace = true
 [*.fs]
 max_line_length = 90
 fsharp_single_argument_web_mode = true
+fsharp_multiline_block_brackets_on_same_column = true
 
 [*.{c,f}sproj]
 indent_size = 2
