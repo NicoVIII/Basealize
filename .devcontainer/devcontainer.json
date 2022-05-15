@@ -2,8 +2,7 @@
     "name": "F# (.NET)",
     "build": {
         "dockerfile": "Dockerfile",
-        "args": {
-        }
+        "args": {}
     },
     "settings": {
         "terminal.integrated.profiles.linux": {
@@ -20,6 +19,7 @@
         "Ionide.Ionide-fsharp",
         "ms-dotnettools.csharp",
         "ionide.ionide-paket",
+        "github.copilot",
         "me-dutour-mathieu.vscode-github-actions"
     ],
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
