@@ -33,8 +33,8 @@ module Parse =
 
     let digit digit =
         tryDigit digit
-        |> Option.defaultWith
-            (fun () -> failwithf "%s is not a valid seximal digit." digit)
+        |> Option.defaultWith (fun () ->
+            failwithf "%s is not a valid seximal digit." digit)
 
     let tryNumber (number: string) =
         match number with

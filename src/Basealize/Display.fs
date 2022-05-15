@@ -3,11 +3,10 @@
 [<RequireQualifiedAccess>]
 module Display =
     let inline number digit numBase precision (number: ^a) =
-        let zero : ^a = LanguagePrimitives.GenericZero
-        let one : ^a = LanguagePrimitives.GenericOne
+        let zero: ^a = LanguagePrimitives.GenericZero
+        let one: ^a = LanguagePrimitives.GenericOne
 
-        let baseNum : ^a =
-            (Seq.init numBase (fun _ -> one)) |> Seq.sum
+        let baseNum: ^a = (Seq.init numBase (fun _ -> one)) |> Seq.sum
 
         // Helper to convert the front part of the number
         let rec helperFront number parts =
@@ -87,8 +86,7 @@ module Display =
              |> helperBack decimals 1uy
          else
              front)
-        |> Seq.map
-            (function
+        |> Seq.map (function
             | Separator -> "."
             | Digit d -> digit d)
         |> String.concat ""

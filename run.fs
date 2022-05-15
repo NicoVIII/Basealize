@@ -16,18 +16,31 @@ let inline isProj (file: string) = isFsproj file || isCsproj file
 
 let inline getProjectsFromFolder folder =
     folder
-    |> Seq.collect (fun folder -> Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories))
+    |> Seq.collect (fun folder ->
+        Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories))
     |> Seq.filter isProj
 
-let inline getAllProjects () = getProjectsFromFolder [ Config.srcPath; Config.testPath; Config.examplesPath ]
-let inline getTestProjects () = getProjectsFromFolder [ Config.testPath ]
-let inline getSrcProjects () = getProjectsFromFolder [ Config.srcPath ]
+let inline getAllProjects () =
+    getProjectsFromFolder [
+        Config.srcPath
+        Config.testPath
+        Config.examplesPath
+    ]
+
+let inline getTestProjects () =
+    getProjectsFromFolder [
+        Config.testPath
+    ]
+
+let inline getSrcProjects () =
+    getProjectsFromFolder [ Config.srcPath ]
 
 [<RequireQualifiedAccess>]
 module Task =
     let restore () =
         job {
             DotNet.toolRestore ()
+
             for project in getAllProjects () do
                 DotNet.restore project
         }
@@ -39,10 +52,10 @@ module Task =
         }
 
     let test () =
-         parallelJob {
-             for project in getTestProjects () do
+        parallelJob {
+            for project in getTestProjects () do
                 DotNet.run project
-         }
+        }
 
     let pack version =
         job {
@@ -56,7 +69,7 @@ module Task =
 
 // We determine, what we want to execute
 [<EntryPoint>]
-let main args: int =
+let main args : int =
     List.ofArray args
     |> function
         | [ "restore" ] -> Task.restore ()
@@ -78,11 +91,12 @@ let main args: int =
             }
         // Catch errors and help
         | [ "pack" ] ->
-            Job.error [ "Usage: dotnet run pack <version>" ]
+            Job.error [
+                "Usage: dotnet run pack <version>"
+            ]
         | _ ->
-            Job.error
-                [
-                        "Usage: dotnet run <command>"
-                        "Look up available commands in run.fs"
-                    ]
+            Job.error [
+                "Usage: dotnet run <command>"
+                "Look up available commands in run.fs"
+            ]
     |> Job.execute

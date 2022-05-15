@@ -35,8 +35,7 @@ module Parse =
             | x -> x - 1
 
         // String without separators and sign
-        let number' =
-            number.Split separator |> String.concat ""
+        let number' = number.Split separator |> String.concat ""
 
         number'.ToCharArray()
         |> Array.map string
