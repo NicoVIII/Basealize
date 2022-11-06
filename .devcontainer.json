@@ -1,0 +1,29 @@
+{
+    "name": "F# (.NET)",
+    "image": "mcr.microsoft.com/devcontainers/dotnet:0-6.0-bullseye",
+    "features": {},
+    // Configure tool-specific properties.
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "editorconfig.editorconfig",
+                "Ionide.Ionide-fsharp",
+                "ms-dotnettools.csharp",
+                "github.copilot",
+                "me-dutour-mathieu.vscode-github-actions"
+            ],
+            "settings": {
+                "FSharp.dotnetRoot": "/usr/bin"
+            }
+        }
+    },
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "dotnet restore",
+    "postStartCommand": "dotnet run restore",
+    // Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode"
+}
