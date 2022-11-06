@@ -37,21 +37,16 @@ module Parse =
         | "8" -> Some 8.
         | "9" -> Some 9.
         | c when List.contains c Constants.letters ->
-            List.findIndex ((=) c) Constants.letters
-            |> (+) 10
-            |> (float >> Some)
+            List.findIndex ((=) c) Constants.letters |> (+) 10 |> (float >> Some)
         | _ -> None
 
     let digit digit =
         tryDigit digit
-        |> Option.defaultWith (fun () ->
-            failwithf "%s is not a valid seximal digit." digit)
+        |> Option.defaultWith (fun () -> failwithf "%s is not a valid seximal digit." digit)
 
     let tryNumber (number: string) =
         match number with
-        | ValidNumber _ ->
-            Parse.parseNumber digit Constants.numBaseFloat number
-            |> Some
+        | ValidNumber _ -> Parse.parseNumber digit Constants.numBaseFloat number |> Some
         | _ -> None
 
     let number (number: string) =

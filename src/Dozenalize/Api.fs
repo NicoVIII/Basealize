@@ -100,18 +100,15 @@ type DozenalParser(config) =
 
     interface BaseParser with
         member this.CheckForValidNumber(number) =
-            Parse.validNumber this.Config number
-            |> Option.isSome
+            Parse.validNumber this.Config number |> Option.isSome
 
         member this.TryParseDigit(number) =
-            Parse.tryDigit this.Config number
-            |> Option.toNullable
+            Parse.tryDigit this.Config number |> Option.toNullable
 
         member this.ParseDigit(number) = Parse.digit this.Config number
 
         member this.TryParseNumber(number) =
-            Parse.tryNumber this.Config number
-            |> Option.toNullable
+            Parse.tryNumber this.Config number |> Option.toNullable
 
         member this.ParseNumber(number) = Parse.number this.Config number
 

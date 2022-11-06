@@ -13,11 +13,7 @@ module Display =
             let rest = (abs number) % numBase
 
             // Add digit of rest to result
-            let parts =
-                int rest
-                |> Digit
-                |> Seq.singleton
-                |> Seq.append parts
+            let parts = int rest |> Digit |> Seq.singleton |> Seq.append parts
 
             // Calculate what is left for the next run
             let rest' =
@@ -26,21 +22,14 @@ module Display =
                 | number -> (number + rest) / numBase
 
             // If we have nothing left,
-            if rest' = 0 then
-                parts
-            else
-                helperFront rest' parts
+            if rest' = 0 then parts else helperFront rest' parts
 
         // Helper to convert the back part of the number
         let rec helperBack (number: ^a) counter parts =
             let rest = (abs number) * baseNum
 
             // Add digit of rest to result
-            let parts =
-                int rest
-                |> Digit
-                |> Seq.singleton
-                |> Seq.append parts
+            let parts = int rest |> Digit |> Seq.singleton |> Seq.append parts
 
             // Calculate what is left for the next run
             let rest' = rest % one
@@ -82,8 +71,7 @@ module Display =
         let decimals = abs number % one
 
         (if decimals > zero && precision > 0uy then
-             Seq.append front (Seq.singleton Separator)
-             |> helperBack decimals 1uy
+             Seq.append front (Seq.singleton Separator) |> helperBack decimals 1uy
          else
              front)
         |> Seq.map (function
@@ -91,8 +79,4 @@ module Display =
             | Digit d -> digit d)
         |> String.concat ""
         // Do we need to add a minus?
-        |> (fun numberString ->
-            if number < zero then
-                "-" + numberString
-            else
-                numberString)
+        |> (fun numberString -> if number < zero then "-" + numberString else numberString)

@@ -33,14 +33,11 @@ module Parse =
 
     let digit digit =
         tryDigit digit
-        |> Option.defaultWith (fun () ->
-            failwithf "%s is not a valid seximal digit." digit)
+        |> Option.defaultWith (fun () -> failwithf "%s is not a valid seximal digit." digit)
 
     let tryNumber (number: string) =
         match number with
-        | ValidNumber _ ->
-            Parse.parseNumber digit Constants.numBaseFloat number
-            |> Some
+        | ValidNumber _ -> Parse.parseNumber digit Constants.numBaseFloat number |> Some
         | _ -> None
 
     let number (number: string) =

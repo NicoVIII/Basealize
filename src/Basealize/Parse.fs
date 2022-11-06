@@ -5,14 +5,7 @@ open System.Text.RegularExpressions
 [<RequireQualifiedAccess>]
 module Parse =
     let validNumber digitRegex numberString =
-        Regex.Match(
-            numberString,
-            @"^-?"
-            + digitRegex
-            + @"+([.,]"
-            + digitRegex
-            + @"*)?$"
-        )
+        Regex.Match(numberString, @"^-?" + digitRegex + @"+([.,]" + digitRegex + @"*)?$")
         |> (fun m -> m.Success)
         |> function
             | true -> Some numberString
@@ -41,10 +34,7 @@ module Parse =
         |> Array.map string
         |> Array.fold
             (fun (sum, exponent) char ->
-                let sum =
-                    digit char
-                    |> (*) (pown numBase exponent)
-                    |> (+) sum
+                let sum = digit char |> (*) (pown numBase exponent) |> (+) sum
 
                 (sum, exponent - 1))
             (0., startExponent)

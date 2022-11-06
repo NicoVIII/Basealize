@@ -21,8 +21,7 @@ type SeximalPrinter(precision) =
 
         member _.PrintNumber(number: int, precision) = Display.number precision number
 
-        member _.PrintNumber(number: nativeint, precision) =
-            Display.number precision number
+        member _.PrintNumber(number: nativeint, precision) = Display.number precision number
 
         member _.PrintNumber(number: int64, precision) = Display.number precision number
 

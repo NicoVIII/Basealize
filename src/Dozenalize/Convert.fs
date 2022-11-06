@@ -43,14 +43,11 @@ module Parse =
 
     let digit config digit =
         tryDigit config digit
-        |> Option.defaultWith (fun () ->
-            failwithf "%s is not a valid dozenal digit for given config." digit)
+        |> Option.defaultWith (fun () -> failwithf "%s is not a valid dozenal digit for given config." digit)
 
     let tryNumber config (number: string) =
         match number with
-        | ValidNumber config _ ->
-            Parse.parseNumber (digit config) Constants.numBaseFloat number
-            |> Some
+        | ValidNumber config _ -> Parse.parseNumber (digit config) Constants.numBaseFloat number |> Some
         | _ -> None
 
     let number config (number: string) =

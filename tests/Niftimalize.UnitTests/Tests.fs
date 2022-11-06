@@ -41,76 +41,65 @@ module Data =
             154.75, "4A.R"
         ]
         // Add negated versions
-        |> List.fold
-            (fun newList (nr, nrString) ->
-                (nr * -1., "-" + nrString)
-                :: (nr, nrString) :: newList)
-            []
+        |> List.fold (fun newList (nr, nrString) -> (nr * -1., "-" + nrString) :: (nr, nrString) :: newList) []
 
-    let precisionTestData =
-        [
-            0.2, 0, "0"
-            0.2, 1, "0.7"
-            0.2, 10, "0.7777777777"
-            0.99, 1, "1.0"
-            0.999999, 5, "0.ZZZYC"
-        ]
+    let precisionTestData = [
+        0.2, 0, "0"
+        0.2, 1, "0.7"
+        0.2, 10, "0.7777777777"
+        0.99, 1, "1.0"
+        0.999999, 5, "0.ZZZYC"
+    ]
 
 let tests =
-    testList
-        "Tests"
-        [
-            testList
-                "For number to niftimal string conversion"
-                [
-                    // Null case
-                    testForNumber 0. "0"
+    testList "Tests" [
+        testList "For number to niftimal string conversion" [
+            // Null case
+            testForNumber 0. "0"
 
-                    // Test some numbers
-                    for (nr, nrString) in numberTestData do
-                        testForNumber nr nrString
+            // Test some numbers
+            for (nr, nrString) in numberTestData do
+                testForNumber nr nrString
 
-                    // Test some precisions
-                    for (nr, precision, nrString) in precisionTestData do
-                        testWithPrecision precision nr nrString
+            // Test some precisions
+            for (nr, precision, nrString) in precisionTestData do
+                testWithPrecision precision nr nrString
 
-                    // Some different datatypes
-                    test "decimal: 23" {
-                        let result = display 23m
-                        Expect.equal result "N" "The strings should equal"
-                    }
-                    test "single: 23" {
-                        let result = display 23f
-                        Expect.equal result "N" "The strings should equal"
-                    }
-                    test "bigint: 23" {
-                        let result = display 23I
-                        Expect.equal result "N" "The strings should equal"
-                    }
-                    // Uints do not work, because of the use of abs
-                    (*test "uint: 23" {
+            // Some different datatypes
+            test "decimal: 23" {
+                let result = display 23m
+                Expect.equal result "N" "The strings should equal"
+            }
+            test "single: 23" {
+                let result = display 23f
+                Expect.equal result "N" "The strings should equal"
+            }
+            test "bigint: 23" {
+                let result = display 23I
+                Expect.equal result "N" "The strings should equal"
+            }
+            // Uints do not work, because of the use of abs
+            (*test "uint: 23" {
                   let result = display 23u
                   Expect.equal result "1B" "The strings should equal"
               }*)
-                    test "int: 23" {
-                        let result = display 23
-                        Expect.equal result "N" "The strings should equal"
-                    }
-                ]
-            testList
-                "For niftimal string to number conversion"
-                [
-                    // Null case
-                    testForNumber 0. "0"
-
-                    // Test some numbers
-                    for (nr, nrString) in numberTestData do
-                        testForString nrString nr
-                ]
-            // Test property display >> parse = id
-            testProperty "property: display >> parse = id"
-            <| fun number ->
-                let displayed = display number
-                let parsed = Parse.number displayed |> int
-                parsed = number
+            test "int: 23" {
+                let result = display 23
+                Expect.equal result "N" "The strings should equal"
+            }
         ]
+        testList "For niftimal string to number conversion" [
+            // Null case
+            testForNumber 0. "0"
+
+            // Test some numbers
+            for (nr, nrString) in numberTestData do
+                testForString nrString nr
+        ]
+        // Test property display >> parse = id
+        testProperty "property: display >> parse = id"
+        <| fun number ->
+            let displayed = display number
+            let parsed = Parse.number displayed |> int
+            parsed = number
+    ]
