@@ -1,8 +1,6 @@
 # Basealize
 
-[![GitHub Actions Build](https://img.shields.io/github/workflow/status/NicoVIII/Basealize/Build?style=flat-square)](https://github.com/NicoVIII/Basealize/actions/workflows/build.yml)
 ![Last commit](https://img.shields.io/github/last-commit/NicoVIII/Basealize?style=flat-square)
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?style=flat-square&logo=gitpod)](https://gitpod.io/#https://github.com/NicoVIII/Basealize)
 
 [![nuget (Basealize)](https://img.shields.io/nuget/v/NicoVIII.Basealize?label=Basealize&style=flat-square&logo=nuget)](https://www.nuget.org/packages/NicoVIII.Basealize/)
 [![nuget (Dozenalize)](https://img.shields.io/nuget/v/NicoVIII.Dozenalize?label=Dozenalize&style=flat-square&logo=nuget)](https://www.nuget.org/packages/NicoVIII.Dozenalize/)
