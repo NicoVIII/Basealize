@@ -1,7 +1,11 @@
 {
     "name": "F# (.NET)",
-    "image": "mcr.microsoft.com/devcontainers/dotnet:0-6.0-bullseye",
-    "features": {},
+    "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+    "features": {
+        "ghcr.io/devcontainers/features/dotnet:1": {
+            "version": "7"
+        }
+    },
     // Configure tool-specific properties.
     "customizations": {
         // Configure properties specific to VS Code.
