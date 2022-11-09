@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2022-11-09
+Initial stable version based on 0.3.0
+
 ## [0.3.0] - 2021-08-07
 ### Added
 - Add C# interop layer (.CSharp namespace in every package)
