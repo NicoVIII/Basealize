@@ -3,7 +3,7 @@ source https://api.nuget.org/v3/index.json
 storage: none
 framework: auto-detect
 
-nuget FSharp.Core
+nuget FSharp.Core >= 6.0 lowest_matching: true, redirects: force
 
 nuget Expecto
 nuget FsCheck
