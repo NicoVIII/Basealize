@@ -8,6 +8,6 @@
     <Compile Include="run.fs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NicoVIII.RunHelpers" Version="0.5.0-alpha.6" />
+    <PackageReference Include="NicoVIII.RunHelpers" Version="0.5.0" />
   </ItemGroup>
 </Project>

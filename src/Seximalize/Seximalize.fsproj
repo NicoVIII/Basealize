@@ -1,18 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Product>NicoVIII.Seximalize</Product>
     <PackageId>NicoVIII.Seximalize</PackageId>
     <Title>Seximalize</Title>
     <Description>A package to help converting numbers to seximal and the other way around.</Description>
     <Tags>Numberbases;Seximal</Tags>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="Convert.fs" />
     <Compile Include="Api.fs" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Basealize\Basealize.fsproj" />
   </ItemGroup>
+
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+
 </Project>

@@ -30,31 +30,35 @@ let inline getSrcProjects () =
 
 [<RequireQualifiedAccess>]
 module Task =
-    let restore () = job {
-        DotNet.toolRestore ()
+    let restore () =
+        job {
+            DotNet.toolRestore ()
 
-        for project in getAllProjects () do
-            DotNet.restore project
-    }
-
-    let build config = job {
-        for project in getAllProjects () do
-            DotNet.build project config
-    }
-
-    let test () = parallelJob {
-        for project in getTestProjects () do
-            DotNet.run project
-    }
-
-    let pack version = job {
-        Shell.cleanDir Config.packPath
-
-        parallelJob {
-            for project in getSrcProjects () do
-                DotNet.pack Config.packPath project version
+            for project in getAllProjects () do
+                DotNet.restore project
         }
-    }
+
+    let build config =
+        job {
+            for project in getAllProjects () do
+                DotNet.build project config
+        }
+
+    let test () =
+        parallelJob {
+            for project in getTestProjects () do
+                DotNet.run project
+        }
+
+    let pack version =
+        job {
+            Shell.cleanDir Config.packPath
+
+            parallelJob {
+                for project in getSrcProjects () do
+                    DotNet.pack Config.packPath project version
+            }
+        }
 
 // We determine, what we want to execute
 [<EntryPoint>]
@@ -62,19 +66,22 @@ let main args : int =
     List.ofArray args
     |> function
         | [ "restore" ] -> Task.restore ()
-        | [ "build" ] -> job {
-            Task.restore ()
-            Task.build Debug
-          }
-        | [ "test" ] -> job {
-            Task.restore ()
-            Task.test ()
-          }
-        | [ "pack"; version ] -> job {
-            Task.restore ()
-            Task.build Debug
-            Task.pack version
-          }
+        | [ "build" ] ->
+            job {
+                Task.restore ()
+                Task.build Debug
+            }
+        | [ "test" ] ->
+            job {
+                Task.restore ()
+                Task.test ()
+            }
+        | [ "pack"; version ] ->
+            job {
+                Task.restore ()
+                Task.build Debug
+                Task.pack version
+            }
         // Catch errors and help
         | [ "pack" ] -> Job.error [ "Usage: dotnet run pack <version>" ]
         | _ -> Job.error [ "Usage: dotnet run <command>"; "Look up available commands in run.fs" ]

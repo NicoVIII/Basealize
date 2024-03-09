@@ -6,9 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Niftimalize\Niftimalize.fsproj">
-      <Name>Niftimalize.fsproj</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\..\src\Niftimalize\Niftimalize.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

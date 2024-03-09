@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
     <Product>NicoVIII.Dozenalize</Product>
     <PackageId>NicoVIII.Dozenalize</PackageId>
     <Title>Dozenalize</Title>
@@ -16,4 +18,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Basealize\Basealize.fsproj" />
   </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

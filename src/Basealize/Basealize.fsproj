@@ -1,17 +1,24 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Product>NicoVIII.Basealize</Product>
     <PackageId>NicoVIII.Basealize</PackageId>
     <Title>Basealize</Title>
     <Description>A package to help creating libraries for converting numbers to different bases and the otherway around.</Description>
     <Tags>Numberbases</Tags>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="Types.fs" />
     <Compile Include="Display.fs" />
     <Compile Include="Parse.fs" />
     <Compile Include="Api.fs" />
   </ItemGroup>
+
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+
 </Project>
