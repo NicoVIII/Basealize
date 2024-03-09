@@ -3,7 +3,13 @@ name: Build
 on:
   push:
     branches:
-      - "main"
+      - "*"
+    tags-ignore:
+      - "*"
+    paths-ignore:
+      - "**.md"
+      - ".vscode/**"
+      - ".devcontainer/**"
   pull_request:
 
 jobs:
