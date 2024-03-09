@@ -1,7 +1,7 @@
 # Basealize
 
 [![GitHub Release Date](https://img.shields.io/github/release-date/NicoVIII/Basealize?style=flat-square&label=latest%20release%20date)](https://github.com/NicoVIII/Basealize/releases)
-![Last commit](https://img.shields.io/github/last-commit/NicoVIII/Basealize?style=flat-square)
+[![Last commit](https://img.shields.io/github/last-commit/NicoVIII/Basealize?style=flat-square)](https://github.com/NicoVIII/Basealize/commits/main/)
 
 [![nuget (Basealize)](https://img.shields.io/nuget/v/NicoVIII.Basealize?label=Basealize&style=flat-square&logo=nuget)](https://www.nuget.org/packages/NicoVIII.Basealize/)
 [![nuget (Dozenalize)](https://img.shields.io/nuget/v/NicoVIII.Dozenalize?label=Dozenalize&style=flat-square&logo=nuget)](https://www.nuget.org/packages/NicoVIII.Dozenalize/)
